@@ -5,6 +5,7 @@
 \usepackage{latexsym}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
+
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{babel,blindtext}
@@ -215,33 +216,49 @@ We can arrange these nested rules in to a tree structure, \textbf{called a decis
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Moda}
-Es posible que una distribución de mediciones tenga más de una moda. Estas modas aparecerían como “picos locales” en la distribución de frecuencia relativa. Por ejemplo, si fuéramos a tabular la longitud de los peces sacados de un lago durante una temporada, podríamos obtener una distribución bimodal, posiblemente reflejando una mezcla de peces jóvenes y viejos en la población. A veces las distribuciones bimodales de tamaños o pesos reflejan una mezcla de mediciones tomadas en machos y hembras. En cualquier caso, un conjunto o distribución de mediciones puede tener más de una moda.
+\frametitle{Model fitting}
+The goal of supervised learning is to automatically come up with classification models. A common way to
+measure performance on this task is in terms of the misclassification rate on the training set:
+\begin{equation*}
+\mathcal{L}(\mathbf{\theta}) \triangleq \frac{1}{N} \sum_{n=1}^{N}{\mathbb{I}(y_{n}\neq f(x_{n};\mathbf{\theta})) }
+\end{equation*}
+where $\mathbb{I}(e)$ is the binary indicator function,
+\begin{center}
+\includegraphics[scale=0.5]{im8}
+\end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Ejercicio}
-Tiempo transcurrido entre la toma de pedido y el servicio a la mesa de los restaurantes fueron registrados 
+\frametitle{Model fitting}
+For example, suppose we are foraging in the wilderness and we find some iris flowers.
+Furthermore, suppose that setosa and versicolor are tasty, but virginica is poisonous. In this case, we
+might use the asymmetric loss function
 \begin{center}
 \includegraphics[scale=0.4]{im9}
 \end{center}
-¿Cuál restaurante considera usted que presta un mejor servicio y por qué?
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Ejercicio}
-Resultados
-\begin{center}
-\includegraphics[scale=0.5]{im10}
-\end{center}
+\frametitle{Model fitting}
+We can then define empirical risk to be the average loss of the predictor on the training set:
+\begin{equation*}
+\mathcal{L}(\mathbf{\theta}) \triangleq \frac{1}{N} \sum_{n=1}^{N}{\mathscr{l}(y_{n}, f(x_{n};\mathbf{\theta})) }
+\end{equation*}
+the empirical risk is equal to misclassification rate when we use zero-one loss for comparing the true label with the prediction
+\begin{equation*}
+\textit{l}_{01}(y,\hat{y})= \mathbb{I}(y_{n}\neq \hat{y}) 
+\end{equation*} 
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Medidas de variabilidad}
-Los conjuntos de datos pueden tener el mismo centro pero con aspecto diferente por la forma en que los números se dispersan desde el centro. Considere las dos distribuciones que se muestran en la fi gura 2.6. Ambas distribuciones están centradas en $x=4$, pero hay una gran diferencia en la forma en que las mediciones se dispersan o varían.
-\begin{center}
-\includegraphics[width=\textwidth]{im11}
-\end{center}
+\frametitle{Model fitting}
+One way to define the problem of model fitting or training is to find a setting of the parameters
+that minimizes the empirical risk on the training set:
+\begin{equation*}
+\hat{\theta} =  \arg\min_{\theta} \mathcal{L}(\mathbf{\theta})  =\arg\min_{\theta} \frac{1}{N} \sum_{n=1}^{N}{l(y_{n}, f(x_{n};\mathbf{\theta})) }
+\end{equation*}
+This is called empirical risk minimization.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
