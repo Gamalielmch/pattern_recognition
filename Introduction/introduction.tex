@@ -5,7 +5,6 @@
 \usepackage{latexsym}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
-
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{babel,blindtext}
@@ -13,6 +12,7 @@
 \usepackage[round]{natbib}
 \bibliographystyle{chicago}
 \usepackage{subcaption} 
+\usepackage{mathrsfs}
 
 
 \decimalpoint
@@ -242,11 +242,11 @@ might use the asymmetric loss function
 \frametitle{Model fitting}
 We can then define empirical risk to be the average loss of the predictor on the training set:
 \begin{equation*}
-\mathcal{L}(\mathbf{\theta}) \triangleq \frac{1}{N} \sum_{n=1}^{N}{\mathscr{l}(y_{n}, f(x_{n};\mathbf{\theta})) }
+\mathcal{L}(\mathbf{\theta}) \triangleq \frac{1}{N} \sum_{n=1}^{N}{\ell(y_{n}, f(x_{n};\mathbf{\theta})) }
 \end{equation*}
 the empirical risk is equal to misclassification rate when we use zero-one loss for comparing the true label with the prediction
 \begin{equation*}
-\textit{l}_{01}(y,\hat{y})= \mathbb{I}(y_{n}\neq \hat{y}) 
+\ell_{01}(y,\hat{y})= \mathbb{I}(y_{n}\neq \hat{y}) 
 \end{equation*} 
 
 \end{frame}
@@ -263,248 +263,277 @@ This is called empirical risk minimization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Rango}
-\begin{block}{Definición}
-El rango, R, de un conjunto de n mediciones se define como la diferencia entre la medición más grande y la más pequeña.
+\frametitle{Uncertainty}
+In many cases, we will not be able to perfectly predict the exact output given the input, due to
+lack of knowledge of the input-output mapping (this is called epistemic uncertainty or model
+uncertainty), and/or due to intrinisic (irreducible) stochasticity in the mapping (this is called
+aleatoric uncertainty or data uncertainty).We can capture our uncertainty using the following conditional
+probability distribution:
+%
+\begin{equation*}
+p(y=c\vert x ; \theta)=f_{c}(x; \theta)
+\end{equation*}
+
+
+where $f:X\rightarrow [0; 1]^C$ maps inputs to a probability distribution over the C possible output labels.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Uncertainty}
+When fitting probabilistic models, it is common to use the negative log probability as our loss
+function:
+\begin{equation*}
+\ell(y,f(x;\theta))= -log p(y\vert f(x;\theta) )
+\end{equation*}
+The reasons for this are explained after, but the intuition is that a good model (with low
+loss) is one that assigns a high probability to the true output y for each corresponding input x. The
+average negative log probability of the training set is given by
+\begin{equation*}
+NNL(\theta)= \frac{1}{N}\sum_{n=1}^{N} log p(y\vert f(x;\theta) )
+\end{equation*}
+This is called the \textbf{negative log likelihood}.
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Regression}
+Now suppose that we want to predict a real-valued quantity $y\in \mathfrak{R}$ instead of a class label $y\in \lbrace 1, \ldots,C \rbrace$
+this is known as regression. For example, in the case of Iris flowers, $y$ might be the degree of toxicity if the flower is eaten, or the average height of the plant.
+Regression is very similar to classification. However, since the output is real-valued, we need to
+use a different loss function. For regression, the most common choice is to use quadratic loss, or $l_{2}$
+loss:
+\begin{equation*}
+\ell_{2}(y, \hat{y})=(y-\hat{y})^2
+\end{equation*}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear regression}
+We can fit this data using a simple linear regression model of the form
+
+\begin{equation*}
+f(x;\theta)=b+wx 
+\end{equation*}
+\begin{center}
+\includegraphics[scale=0.4]{im10}
+\end{center}
+
+where $w$ is the slope, $b$ is the offset, and $\theta= (w,b)$ are all the parameters of the model. 
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear regression}
+By adjusting, we can minimize the sum of squared errors until we find the least squares solution
+
+\begin{equation*}
+\hat{\theta}= \arg\min_{\theta} MSE(\theta)
+\end{equation*}
+
+If we have multiple input features, we can write
+
+\begin{equation*}
+f(x;\theta) = b + w_{1}x_{1} +\cdots+ w_{D}x_{D} = b + \boldsymbol {w}^{T}\boldsymbol {x}
+\end{equation*}
+where$\boldsymbol {\theta}= (w; b)$. This is called \textbf{multiple linear regression}.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear regression}
+The fitted plane has the form $\hat{f}(\boldsymbol {x}) = w_0 + w_1x_1 + w_2x_2$.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{im11}
+\end{center}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear regression}
+ We can extend this model to use $D > 2$ input features (such as time of day), but then it becomes
+harder to visualize. To reduce notational clutter, it is standard to absorb the bias term b into the weights $\boldsymbol {w}$ by defining
+$\tilde{w} = [b,w_1, \ldots,wD]$ and defining $\tilde{x} = [1, x_1, \ldots, x_{D}]$, so that
+\begin{equation*}
+\tilde{w}^T  \tilde{x} = \boldsymbol{w}^T\boldsymbol{x}+ b
+\end{equation*}
+This converts the affine function into a linear function.
+In statistics, the $ \boldsymbol{w}$ parameters are usually called regression coefficients (and are typically
+denoted by $ \boldsymbol{ \beta}$) and $b$ is called the intercept. In ML, the parameters $\boldsymbol{w}$ are called the\textbf{ weights} and $b$
+is called the \textbf{bias}.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Polynomial regression}
+We can improve the fit by using a \textbf{polynomial regression} model of degree D. This has the form $f(x;\boldsymbol{w}) = \boldsymbol{w}^T \phi(x)$, where $\phi(x)$ is a feature vector derived from the input, which has the following form:
+\begin{equation*}
+ \phi(x)=[1,x,x^2,\ldots,x^D]
+\end{equation*}
+we see that using $D = 2$ results in a much better fit. We can keep increasing $D$, and
+hence the number of parameters in the model, until $D = N-1$; in this case, we have one parameter per data point, so we can perfectly interpolate the data. The resulting model will have 0 MSE. However, intuitively the resulting function will not be a good predictor for future
+inputs, since it is too “wiggly”.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Polynomial regression}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{im12}
+\end{center}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Polynomial regression}
+We can also apply polynomial regression to multi-dimensional inputs.For example, next figure plots the predictions for the temperature model after performing a quadratic expansion of the inputs
+\begin{center}
+\includegraphics[width=0.5\textwidth]{im13}
+\end{center}
+We can also add cross terms, such as $x_1 x_2$, to capture
+interaction effects.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Deep neural networks}
+We can create much more powerful models by learning  to do such nonlinear feature extraction automatically. If we let $ \phi(x)$ have its own set of parameters,
+say $\boldsymbol{V}$, then the overall model has the form
+
+\begin{equation*}
+f(x;w,\boldsymbol{V})= w^T \phi(x;\boldsymbol{V})
+\end{equation*}
+%We can recursively decompose the feature extractor $\phi(x;\boldsymbol{V})$ into a composition of simpler functions.
+The resulting model then becomes a stack of L nested functions:
+\begin{equation*}
+f(x;\boldsymbol{\theta})= f_{L}(f_{L-1}(\cdots (f_{1}(x)) \cdots))
+\end{equation*}
+
+where $f_{\ell}(x) = f(x;\theta_{\ell})$ is the function at layer $\ell$. The final layer is linear and has the form
+
+$f_{L}(x) = w^T f_{1:L-1}(x)$, where $f_{1:L-1}(x)$ is the learned feature extractor. This is the key idea behind
+\textbf{deep neural networks} or \textbf{DNNs}.
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Overfitting and generalization}
+We can rewrite the empirical risk in the following equivalent way:
+
+\begin{equation*}
+\mathcal{L}(\mathbf{\theta}; \mathcal{D}_{train})= \frac{1}{\vert \mathcal{D}_{train}\vert }  \sum_{(x_n,y_n)\in \mathcal{D}_{train}  } \ell (y_{n}, f(x_{n});\boldsymbol{\theta})
+\end{equation*}
+where $N = \vert Dtrain \vert$ is the size of the training set $ \mathcal{D}_{train}$. This formulation is useful because it makes
+explicit which dataset the loss is being evaluated on.
+
+ A model that perfectly fits the training data, but which is too complex, is said to suffer from \textbf{overfitting}.
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Overfitting and generalization}
+
+\begin{center}
+\includegraphics[scale=0.4]{im14}
+\end{center}
+To detect if a model is overfitting, let us assume (for now) that we have access to the true (but
+unknown) distribution $p*(x; y)$ used to generate the training set. Then, instead of computing the
+empirical risk we compute the theoretical expected loss or \textbf{population risk}
+\begin{equation}
+\mathcal{L}(\boldsymbol{\theta} ;P) \triangleq \mathbf{E}_{p*(x,y)}[\ell(y,f(x;\boldsymbol{\theta} ))]
+\end{equation}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Overfitting and generalization}
+In practice we don’t know $p*$. However, we can partition the data we do have into two subsets,
+known as the training set and the \textbf{test set}. Then we can approximate the population risk using the
+\textbf{test risk}
+
+\begin{equation*}
+\mathcal{L}(\mathbf{\theta}; \mathcal{D}_{test})= \frac{1}{\vert \mathcal{D}_{test} \vert }  \sum_{(x_n,y_n)\in \mathcal{D}_{test}  } \ell (y_{n}, f(x_{n}) 
+\end{equation*}
+In practice, we need to partition the data into three sets, namely the training set, the test set and
+a validation set; the latter is used for model selection, and we just use the test set to estimate
+future performance (the population risk), i.e., the test set is not used for model fitting or model
+selection.
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{No free lunch theorem}
+\begin{block}{No free lunch theorem}
+There is no single best model that works optimally for all kinds of problems — this
+is sometimes called the no free lunch theorem \footnote{ D. Wolpert. “The lack of a priori distinctions
+between learning algorithms”. In: Neural Computation
+8.7 (1996), pp. 1341–1390 (page 12).}.
 \end{block}
-\vspace{1em}
-
-Para los datos de peso al nacer de la tabla, las mediciones varían de 5.6 a 9.4. Por tanto, el rango es $9.4-5.6 =3.8$.
-\begin{center}
-\includegraphics[scale=0.5]{im4}
-\end{center}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Rango}
-El rango es fácil de calcular, fácil de interpretar
-y es una medida adecuada de variación para conjuntos pequeños de datos. Pero, para conjuntos grandes, el rango no es una medida adecuada de variabilidad. Por ejemplo, las dos distribuciones de frecuencia relativa de la figura tienen el mismo rango pero muy diferentes formas y variabilidad.
-\begin{center}
-\includegraphics[width=\textwidth]{im12}
-\end{center}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Varianza}
-¿Hay una medida de variabilidad que sea más sensible que el rango?
-\begin{columns}
-\column{0.6\textwidth}
-\begin{center}
-\includegraphics[width=\textwidth]{im13}
-\end{center}
-
-\column{0.4\textwidth}
-\begin{center}
-\includegraphics[width=\textwidth]{im14}
-\end{center}
-\end{columns}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Varianza}
-De la suma de desviaciones cuadradas, se calcula una sola medida llamada varianza. Para la varianza de una muestra usamos el símbolo $s^2$ y la varianza de una población $\sigma^2$. La varianza será relativamente grande para datos muy variables y relativamente pequeña para datos menos variables.
-\begin{block}{Definición}
-La \textbf{varianza de una población} de $N$ mediciones es el promedio de los
-cuadrados de las desviaciones de las mediciones alrededor de su media $\mu$. La varianza poblacional se denota con $\sigma^2$ y está dada por la fórmula
-\begin{equation*}
-\sigma^2= \frac{\sum {(x_{i}- \mu)}^2}{N}
-\end{equation*}
-\end{block}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Varianza}
-
-\begin{block}{Definición}
-La \textbf{varianza de una muestra} de $n$ mediciones es la suma de las desviaciones cuadradas de las mediciones alrededor la media $\bar{x}$ dividida entre $(n-1)$. La varianza muestral se denota con $s^2$ y está dada por la fórmula 
-
-\begin{equation*}
-s^2= \frac{\sum {(x_{i}- \bar{x})}^2}{n-1}
-\end{equation*}
-\end{block}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Varianza}
-Para el conjunto de $n = 5$ mediciones muestrales presentadas en la tabla
-\begin{columns}
-\column{0.6\textwidth}
-suma
-\begin{equation*}
-\sum {(x_{i}- \bar{x})}^2=22.80
-\end{equation*}
-varianza muestral
-
-\begin{equation*}
-s^2= \frac{\sum {(x_{i}- \bar{x})}^2}{n-1}= \frac{22.80}{4}=5.70
-\end{equation*}
-
-\column{0.4\textwidth}
-\begin{center}
-\includegraphics[width=\textwidth]{im14}
-\end{center}
-\end{columns}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Desviación estándar}
-La varianza se mide en términos del cuadrado de las unidades originales de medición. Tomando la raíz cuadrada de la varianza, obtenemos la desviación estándar, que regresa la medida de variabilidad a las unidades originales de medición.
-
-\begin{block}{Definición}
-La \textbf{desviación estándar} de un conjunto de mediciones es igual a la raíz
-cuadrada positiva de la varianza.
-\end{block}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Notación}
-
-\begin{center}
-\includegraphics[width=\textwidth]{im15}
-\end{center}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Resumen}
-
-\begin{center}
-\includegraphics[width=\textwidth]{im16}
-\end{center}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Coeficiente de variación}
-El coeficiente de variación es la relación entre la desviación típica de una muestra y su media.
-\begin{equation*}
-CV=\left( \frac{\sigma}{\bar{x}} \right) 100
-\end{equation*}
-El coeficiente de variación permite comparar las dispersiones de dos distribuciones distintas, siempre que sus medias sean positivas.
-
-Mayor dispersión el valor del coeficiente de variación será mayor.
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Coeficiente de variación}
-Una distribución tiene $\bar{x}=140$ y $\sigma =28.28$ y otra $\bar{x}=150$ y $\sigma =24$. ¿Cuál de las dos presenta mayor dispersión?
-
-\begin{equation*}
-\textup{CV}_{1}=\cfrac{28,28}{140}\cdot 100=20,2 \%
-\end{equation*}
- 
-\begin{equation*}
-\textup{CV}_{2}=\cfrac{24}{150}\cdot 100=16 \%
-\end{equation*}
- 
-La primera distribución presenta mayor dispersión.
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Sobre la significancia práctica de la desviación estándar}
-
-\begin{block}{Teorema de Chebyshev}
-Dado un número $k$ mayor o igual a $1$ y un conjunto de n mediciones, al menos $[1 - (1/k^2)]$ de las mediciones estarán dentro de $k$ desviaciones estándar de su media.
-\end{block}
-
-Se construye un intervalo al medir una distancia $k\sigma$ a cualquier lado de la media $m$. El número $k$ puede ser cualquier número mientras sea mayor o igual a 1. Entonces el teorema de Chebyshev expresa que al menos $[1 - (1/k^2)]$ del número total $n$ de mediciones está en el intervalo construido.
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Teorema de Chebyshev}
-Ilustración del teorema de Chebyshev
-\begin{center}
-\includegraphics[width=0.8\textwidth]{im17}
-\end{center}
+For this reason, it is important to have many models and algorithmic techniques in one’s toolbox to choose
+from.
 
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Teorema de Chebyshev}
-Ilustración del teorema de Chebyshev
-\begin{center}
-\includegraphics[scale=0.4]{im18}
-\end{center}
-\begin{center}
-\includegraphics[width=\textwidth]{im19}
-\end{center}
+\frametitle{Unsupervised learning}
+An arguably much more interesting task is to try to “make sense of” data, as opposed to just
+learning a mapping. That is, we just get observed “inputs” $ \mathcal{D}  = \lbrace x_n : n = 1 : N\rbrace$ without any
+corresponding “outputs” $y_{n}$. This is called \textbf{unsupervised learning}.
 
+
+From a probabilistic perspective, we can view the task of unsupervised learning as fitting an
+unconditional model of the form $p(x)$.
 \end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Teorema de Chebyshev}
-Ejemplo. La media y varianza de una muestra de $n = 25$ mediciones son $75$ y $100$, respectivamente. Use el teorema de Chebyshev para describir la distribución de mediciones.
-
-Solución Nos dan $\bar{x} =75$ y $s^2 = 100$. La desviación estándar es $s =\sqrt{100}=10$. La distribución de mediciones está centrada alrededor de x = 75, y el teorema de Chebyshev establece que:
+\frametitle{Unsupervised learning}
 \begin{itemize}
-\item Al menos $3/4$ de las 25 mediciones están en el intervalo $\bar{x} \pm  2s = 75 \pm 2(10)$, esto es, $55$ a $95$.
-
-\item Al menos $8/9$ de las mediciones están en el intervalo $\bar{x} \pm  3s = 75 \pm 3(10)$, esto es, 45 a 105.
+\item Unsupervised learning avoids the need to collect large labeled datasets for training
+\item Unsupervised learning also avoids the need to learn how to partition the world into often arbitrary
+categories.
+\item Finally, unsupervised learning forces the model to “explain” the high dimensional inputs
 \end{itemize}
 
-
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Regla empírica}
-Como el teorema de Chebyshev se aplica a cualquier distribución, es muy conservador. Ésta es la razón por la que hacemos hincapié en “al menos $1 - (1/k ^2)$” en este teorema. Otra regla para describir la variabilidad de un conjunto de datos no funciona para todos los conjuntos de datos, pero funciona muy bien para datos que “se apilan” en la conocida forma de montículo de la figura
-
+\frametitle{Clustering}
+A simple example of unsupervised learning is the problem of finding clusters in data. The goal is to
+partition the input into regions that contain “similar” points.
 \begin{center}
-\includegraphics[scale=0.4]{im20}
-\end{center}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Regla empírica}
-\begin{center}
-\includegraphics[scale=0.4]{im21}
+\includegraphics[scale=0.4]{im15}
 \end{center}
 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Self-supervised learning}
+
+A recently popular approach to unsupervised learning is known as self-supervised learning. In
+this approach, we create proxy supervised tasks from unlabeled data.For example, we might try to learn to predict a color image from a gray scale image, or to mask out words in a sentence and then try to predict them given the surrounding context. The hope is that the resulting predictor
+$\hat{x}_1=f(x_2;\mathbf{\theta}$), where $x_2$ is the observed input and $x_1$ is the predicted output, will learn useful
+features from the data, that can then be used in standard, downstream supervised tasks.
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Regla empírica}
-Ejercicio 
-
-En un estudio de tiempo efectuado en una planta manufacturera, el tiempo para completar una operación especificada se mide para cada uno de los $n= 40$ trabajadores. Se encuentra que la media y la desviación estándar son 12.8 y 1.7, respectivamente. Describa los datos muestrales usando la Regla empírica.
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Regla empírica}
-\begin{center}
-\includegraphics[scale=0.4]{im22}
-\end{center}
-De acuerdo con la Regla empírica, se espera que aproximadamente 68\% de las mediciones caigan en el intervalo de 11.1 a 14.5, aproximadamente 95\% caigan en el intervalo de 9.4 a 16.2, y aproximadamente 99.7\% caigan en el intervalo de 7.7 a 17.9.
+\frametitle{Evaluating unsupervised learning}
+it is very hard to evaluate the quality of the output of
+an unsupervised learning method, because there is no ground truth to compare. A common method for evaluating unsupervised models is to measure the probability assigned by the model to unseen test examples. We can do this by computing the (unconditional) negative log likelihood of the data: 
+\begin{equation*}
+\mathcal{L}(\mathbf{\theta}; \mathcal{D})= \frac{1}{\vert \mathcal{D} \vert } \sum_{(x\in \mathcal{D} ) }log\text{ } p(x\vert \mathbf{\theta}) 
+\end{equation*}
+This treats the problem of unsupervised learning as one of density estimation.                                                                                
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Ejercicio}
-Los maestros-estudiantes son capacitados para desarrollar planes de lecciones, en la suposición de que el plan escrito les ayudará a trabajar de manera satisfactoria en el salón de clases. En un estudio para evaluar la relación entre planes de lección escritos y su implementación en el salón de clases, se calificaron 25 planes de lección en una escala de 0 a 34 de acuerdo a una Lista de verificación de Plan de lección. Las 25 calificaciones se
-muestran en la tabla. Use el teorema de Chebyshev y la Regla empírica (si es aplicable) para describir la distribución de estas calificaciones de evaluación.
-\begin{center}
-\includegraphics[scale=0.4]{im23}
-\end{center}
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Mediciones de posición relativa }
-A veces es necesario conocer la posición de una observación respecto a otras de un conjunto de datos.
+\frametitle{Reinforcement learning}
+addition to supervised and unsupervised learning, there is a third kind of ML known as \textbf{reinforcement learning} (RL). In this class of problems, the system or agent has to learn how to interact with its environment. This can be encoded by means of a policy $a =\pi(x)$, which specifies which action to take in response to each possible input $x$ (derived from the environment state).
 
 \begin{block}{Definición}
 El \textbf{puntaje z muestral} es una medida de posición relativa definida
