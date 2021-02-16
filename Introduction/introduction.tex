@@ -535,144 +535,34 @@ This treats the problem of unsupervised learning as one of density estimation.
 \frametitle{Reinforcement learning}
 addition to supervised and unsupervised learning, there is a third kind of ML known as \textbf{reinforcement learning} (RL). In this class of problems, the system or agent has to learn how to interact with its environment. This can be encoded by means of a policy $a =\pi(x)$, which specifies which action to take in response to each possible input $x$ (derived from the environment state).
 
-\begin{block}{Definición}
-El \textbf{puntaje z muestral} es una medida de posición relativa definida
-por
-\begin{equation*}
-\text{puntaje } z = \frac{x-\bar{x}}{s}
-\end{equation*}
-\end{block}
-
-Un puntaje z mide la distancia entre una observación y la media, medidas en unidades de desviación estándar.
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Mediciones de posición relativa }
-Por ejemplo, suponga que la media y desviación estándar de los puntajes de examen (basados en un total de 35 puntos) son 25 y 4, respectivamente. El puntaje z para una calificación de 30 se calcula como sigue:
+\frametitle{Reinforcement learning}
+The difference from supervised learning (SL) is that the system is not told which action is the
+best one to take (i.e., which output to produce for a given input). Instead, the system just receives
+an occasional reward (or punishment) signal in response to the actions that it takes. This is like
+learning with a critic, who gives an occasional thumbs up or thumbs down, as opposed to learning
+with a teacher, who tells you what to do at each step. 
 
-\begin{equation*}
-\text{puntaje } z = \frac{x-\bar{x}}{s}=\frac{30-25}{4}=1.25
-\end{equation*}
-
-El puntaje de 30 está a 1.25 desviaciones estándar arriba de la media $(30 = \bar{x}+1.25s)$.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Mediciones de posición relativa }
+\frametitle{Reinforcement learning}
+RL has grown in popularity recently, due to its broad applicability (since the reward signal that
+the agent is trying to optimize can be any metric of interest). However, it can be harder to make RL
+work than it is for supervised or unsupervised learning, for a variety of reasons. A key difficulty is
+that the reward signal may only be given occasionally (e.g., if the agent eventually reaches a desired
+state), and even then it may be unclear to the agent which of its many actions were responsible for
+getting the reward.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Reinforcement learning}
+The three types of machine learning visualized as layers of a chocolate cake.
 \begin{center}
-\includegraphics[scale=0.4]{im24}
-\end{center}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Percentil}
-Un percentil es otra medida de posición relativa y se usa con más frecuencia para conjuntos grandes de datos. (Los percentiles no son muy útiles para conjuntos pequeños de datos).
-
-\begin{block}{Definición}
-Un conjunto de n mediciones de la variable $x$ se ha reacomodado en
-orden de magnitud. El p-ésimo percentil es el valor de $x$ que es mayor a $p\%$ de las mediciones y es menor que el restante $(100 - p)\%$.
-\end{block}
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Percentil}
-Supongamos que usted ha sido notificado que su calificación de 610, en el Examen verbal de graduación, lo ha colocado en el 60avo percentil en la distribución de calificaciones. ¿Dónde está su calificación de 610 en relación a las calificaciones de los otros que tomaron el examen?
-
-\vspace{1em}
-Solución Calificar en el 60avo percentil significa que $60\%$ de todas las calificaciones de examen fueron más bajas que la calificación de usted y $40\%$ fueron más altas.
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Percentil}
-En general, el 60avo percentil para la variable x es un punto en el eje horizontal de la distribución de datos que es mayor a 60\% de las mediciones y menor que las otras.
-
-\begin{center}
-\includegraphics[scale=0.4]{im25}
-\end{center}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Percentil-Cuartil}
-
-\begin{itemize}
-\item La mediana es igual que el 50avo percentil.
-\item Los percentiles 25avo y 75avo, llamados cuartiles inferior y superior
-\item Veinticinco por ciento de las mediciones serán menores que el cuartil inferior (primero).
-\item 50\% serán menores que la mediana (el segundo cuartil).
-\item 75\% serán menores que el cuartil superior (tercero).
-\end{itemize}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Cuartil}
-
-\begin{center}
-\includegraphics[scale=0.4]{im26}
-\end{center}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Cuartil}
-
-\begin{block}{Definición}
-Un conjunto de $n$ mediciones en la variable $x$ se ha acomodado en orden
-de magnitud. El \textbf{cuartil inferior (primer cuartil), $Q_{1}$ }, es el valor de $x$ que es mayor a un cuarto de las mediciones y es menor que los restantes tres cuartos. El s\textbf{egundo cuartil} es la mediana. El \textbf{cuartil superior (tercer cuartil), $Q_{3}$ }, es el valor de $x$ que es mayor a tres cuartos de las mediciones y es menor que el restante un cuarto.
-\end{block}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Cuartil}
-
-\begin{center}
-\includegraphics[width=\textwidth]{im27}
-\end{center}
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Cuartil}
-
-\begin{center}
-\includegraphics[width=\textwidth]{im28}
-\end{center}
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Intercuartil}
-Como la mediana y los cuartiles dividen la distribución de datos en cuatro partes, cada una de ellas conteniendo alrededor de 25\% de las mediciones, $Q_1$ y $Q_3$ son las fronteras superior e inferior para el 50\% central de la distribución. Podemos medir el rango de este “50\% central” de la distribución usando una medida numérica llamada rango intercuartil.
-
-\begin{block}{Definición}
-El rango intercuartil (IQR) para un conjunto de mediciones es la diferencia entre los cuartiles superior e inferior; esto es, $IQR = Q_3 - Q_1$ .
-\end{block}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{El resumen de cinco números y la gráfica de caja}
-
-
-\begin{center}
-\includegraphics[width=\textwidth]{im29}
-\end{center}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{El resumen de cinco números y la gráfica de caja}
-
-
-\begin{center}
-\includegraphics[width=\textwidth]{im30}
+\includegraphics[scale=0.4]{im16}
 \end{center}
 
 \end{frame}

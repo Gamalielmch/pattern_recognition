@@ -1,0 +1,272 @@
+\documentclass{beamer}
+\usetheme{ALUF}
+
+\usepackage[utf8]{inputenc}
+% \usepackage{palatino}
+% \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[expert]{mathdesign}
+\usepackage[protrusion=true,expansion=true,tracking=true,kerning=true]{microtype}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+%% Use any fonts you like.
+% \usepackage{libertine}
+
+\title{Repaso de Álgebra lineal}
+\subtitle{Reconocimiento de patrones}
+\author{Gamaliel Moreno}
+\date{Enero-Julio 2021}
+%\institute{\url{gamalielmch@uaz.edu.mx}}
+
+\institute{\url{gamalielmch@uaz.edu.mx}\\\url{http://pds.uaz.edu.mx/}}
+
+\begin{document}
+
+\begin{frame}[plain,t]
+\titlepage
+\end{frame}
+
+\begin{frame}% [plain,t]
+	\frametitle{Contenido}
+\tableofcontents
+\end{frame}
+
+%=============================================================================================
+
+\section{Vectores y matrices}
+\subsection{Definciones}
+\begin{frame}
+\frametitle{Escalar}
+Un escalar es un número real
+\begin{equation*}
+s\in \mathbb{R}
+\end{equation*}
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Vector}
+Vector de m dimensiones $\boldsymbol{x} \in \mathbb{R}^m$ (m escalares) 
+\begin{equation*}
+\boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix}
+\end{equation*}
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Vector fila}
+Vector de n dimensiones $\boldsymbol{x} \in \mathbb{R}^n$ (n escalares) 
+\begin{equation*}
+\boldsymbol{x}^T = \begin{bmatrix} x_1 &  x_2 & \dots & x_n \end{bmatrix}
+\end{equation*}
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Matriz}
+Matriz de $m  \times n$ $\boldsymbol{A} \in \mathbb{R}^{m\times n}$ 
+\begin{equation*}
+\boldsymbol{A} = \begin{bmatrix} a_{11} &  a_{12} & \dots & a_{1n}\\ a_{21} &  a_{22} & \dots & a_{2n} \\ \vdots &  \vdots & \ddots & \vdots \\ a_{m1} &  a_{m2} & \dots & a_{mn} \end{bmatrix}
+\end{equation*}
+\begin{itemize}
+\item m: files
+\item n: columnas
+\item En notación $a_{ij}$ primer subíndice i es la fila y el segundo la columna
+\item Todas las matrices en $\mathbb{R}^{m\times n}$ conforman un espacio lineal. Esto es $ B=\lbrace B_{i} \vert B_{i} \in \mathbb{R}^{m\times n} \rbrace$, entonces $M = \sum_{i} c_{i}B_{i}$ 
+
+\end{itemize}
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Tensor}
+ Generalización de conceptos anteriores
+\begin{itemize}
+\item Escalar $s \in \mathbb{R}$: tensor 0
+\item Vector $\boldsymbol{v} \in \mathbb{R}^n$: tensor 1
+\item Matriz $\boldsymbol{M} \in \mathbb{R}^{m\times n}$: tensor 2
+\item En general $\mathcal{T} \in \mathbb{R}^{n_1\times n_2 \times \cdots n_q}$ es un tensor de orden $q$
+\end{itemize}
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Matriz en vector}
+Matriz  $\boldsymbol{A} \in \mathbb{R}^{m\times n}$ se descompone en m vectores fila
+\begin{equation*}
+\boldsymbol{A} = \begin{bmatrix} a_{11} &  a_{12} & \dots & a_{1n}\\ a_{21} &  a_{22} & \dots  & a_{2n} \\ \vdots &  \vdots & \ddots & \vdots \\ a_{m1} &  a_{m2} & \dots & a_{mn} \end{bmatrix} = \begin{bmatrix}	\tcboxmath[colback=blue!25!white,colframe=blue,top=0pt,left=10pt,right=10pt,bottom=0pt]{\boldsymbol{a_{1,:}}^T} \\ \tcboxmath[colback=blue!25!white,colframe=blue,top=0pt,left=10pt,right=10pt,bottom=0pt]{\boldsymbol{a_{2,:}}^T} \\ \vdots \\ \tcboxmath[colback=blue!25!white,colframe=blue,top=0pt,left=10pt,right=10pt,bottom=0pt]{\boldsymbol{a_{m,:}}^T}  \end{bmatrix}
+\end{equation*}
+o en vectores columna 
+\begin{equation*}
+\boldsymbol{A} = \begin{bmatrix} a_{11} &  a_{12} & \dots & a_{1n}\\ a_{21} &  a_{22} & \dots  & a_{2n} \\ \vdots &  \vdots & \ddots & \vdots \\ a_{m1} &  a_{m2} & \dots & a_{mn} \end{bmatrix} = \begin{bmatrix}	\tcboxmath[colback=blue!25!white,colframe=blue,top=20pt,left=0pt,right=0pt,bottom=20pt]{\boldsymbol{a_{:,1}}} & \tcboxmath[colback=blue!25!white,colframe=blue,top=20pt,left=0pt,right=0pt,bottom=20pt]{\boldsymbol{a_{:,2}}} & \vdots & \tcboxmath[colback=blue!25!white,colframe=blue,top=20pt,left=0pt,right=0pt,bottom=20pt]{\boldsymbol{a_{:,n}}}  \end{bmatrix}
+\end{equation*}
+
+\end{frame}
+%%%=============================================================================================
+\begin{frame}
+\frametitle{Vectores como matrices}
+\begin{itemize}
+\item Observe que todo vector es un tipo particular de matriz 
+\begin{itemize}
+\item Vector fila: matriz de dimensiones $1 \times n$
+\item Vector columna: matriz de dimensiones $m \times 1$
+\end{itemize}
+\item Propiedades de matrices aplicarán a vectores
+\end{itemize}
+\end{frame}
+%%%=============================================================================================
+\section{Operaciones matriciales}
+\subsection{Definciones}
+\begin{frame}
+\frametitle{Matriz transpuesta 1}
+Si 
+\begin{equation*}
+\boldsymbol{A} = \begin{bmatrix} a_{11} &  a_{12} & \dots & a_{1n}\\ a_{21} &  a_{22} & \dots & a_{2n} \\ \vdots &  \vdots & \ddots & \vdots \\ a_{m1} &  a_{m2} & \dots & a_{mn} \end{bmatrix}
+\end{equation*}
+entonces 
+\begin{equation*}
+\boldsymbol{A}^T = \begin{bmatrix} a_{11} &  a_{21} & \dots & a_{m1}\\ a_{12} &  a_{22} & \dots & a_{m2} \\ \vdots &  \vdots & \ddots & \vdots \\ a_{1n} &  a_{2n} & \dots & a_{mn} \end{bmatrix}
+\end{equation*}
+\begin{itemize}
+\item En otras palabras, si $\boldsymbol{B}= \boldsymbol{A}^T$ entonces $b_{ij}=a_{ij}$
+\item $(\boldsymbol{A}^T)^T= \boldsymbol{A}$
+\item $(\boldsymbol{A}\boldsymbol{B})^T= \boldsymbol{B}^T \boldsymbol{A}^T $
+\item $(\boldsymbol{A}+ \boldsymbol{B})^T= \boldsymbol{A}^T + \boldsymbol{B}^T $
+\end{itemize}
+\end{frame}
+%%%=============================================================================================
+
+%
+%\subsection{Awesome subsection}
+%\begin{frame}
+%	\frametitle{Another Frame Title}
+%
+%	Here comes some math!
+%
+%	\begin{equation}
+%
+%		\begin{bmatrix}
+%	        \Phi_t \\
+%	        \Phi_{t+1} \\
+%	        \vdots \\
+%	        \Phi_{t+H}
+%	    \end{bmatrix}
+%	    ~=~
+%	    \begin{bmatrix}
+%	        \phi_t^1, \ldots, \phi_t^d \\
+%	        \phi_{t+1}^1, \ldots, \phi_{t+1}^d \\
+%	        \vdots \\
+%	        \phi_{t+H}^1, \ldots, \phi_{t+H}^d
+%	    \end{bmatrix}
+%
+%		\label{eq:random}
+%	\end{equation}
+%
+%\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Blocks}
+\begin{definition}[Greetings]
+Hello World
+\end{definition}
+
+\begin{theorem}[Fermat's Last Theorem]
+$a^n + b^n = c^n, n \leq 2$
+\end{theorem}
+
+\begin{alertblock}{Uh-oh.}
+By the pricking of my thumbs.
+\end{alertblock}
+
+\begin{exampleblock}{Uh-oh.}
+Something evil this way comes.
+\end{exampleblock}
+
+\end{frame}
+
+\subsection{Interpretaciones}
+
+
+\begin{frame}
+	\frametitle{Notation}
+	\begin{definition}[Random Variable]
+		Consider $\Omega, F, \mu$, with $\Omega$ being the set of events, $F$ the $\sigma$-algebra on $\Omega$ and some arbitrary measure $\mu$. Further consider an observation space $\Omega', F', \mu'$... A random variable is a deterministic function that 'transports/maps' events from $\Omega$ to $\Omega'$ and effectively induces a new measure $\mu'$. When $\mu'(\Omega') = 1$, it is a probability measure.
+
+	\end{definition}
+\end{frame}
+
+
+\section{Gradientes matriciales}
+\subsection{Gradiente y traza}
+\begin{frame}
+	\frametitle{Notation}
+	definition
+\end{frame}
+
+\subsection{Derivación de ecuaciones normales}
+\begin{frame}
+	\frametitle{Notation}
+	definition
+\end{frame}
+\end{document}
+%
+%
+%\title{Repaso de Álgebra lineal}
+%\subtitle{Reconocimiento de patrones}
+%\author{Gamaliel Moreno}
+%\date{Enero-Julio 2021}
+%\institute{\url{gamalielmch@uaz.edu.mx}}
+%
+%\begin{document}
+%
+%\begin{frame}[plain,t]
+%\titlepage
+%\end{frame}
+%%%=============================================================================================
+%%\section{Contenido}
+%%\begin{frame}
+%%\frametitle{Contenido}
+%%
+%%\end{frame}
+%
+%%=============================================================================================
+%\section{Vectores y matrices}
+%\subsection{Escalar}
+%\begin{frame}
+%\frametitle{Escalar}
+%\begin{itemize}
+%\begin{equation*}
+%s\in \mathcal{R}
+%\end{equation*}
+%\end{frame}
+%%=============================================================================================
+%
+%\subsection{Vector}
+%\begin{frame}
+%\frametitle{Vector}
+%Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+%\end{frame}
+%%=============================================================================================
+%
+%\subsection{Matriz}
+%\begin{frame}
+%\frametitle{Blocks}
+%\begin{definition}[Greetings]
+%Hello World
+%\end{definition}
+%
+%\begin{theorem}[Fermat's Last Theorem]
+%$a^n + b^n = c^n, n \leq 2$
+%\end{theorem}
+%
+%\begin{alertblock}{Uh-oh.}
+%By the pricking of my thumbs.
+%\end{alertblock}
+%
+%\begin{exampleblock}{Uh-oh.}
+%Something evil this way comes.
+%\end{exampleblock}
+%
+%\end{frame}
+%
+%\ThankYouFrame
+%
+%\end{document}
