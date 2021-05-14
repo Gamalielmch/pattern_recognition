@@ -1,0 +1,7 @@
+\babel@toc {spanish}{}
+\beamer@sectionintoc {1}{Clasificación}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Clasificación}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Regresión Logística}{4}{0}{1}
+\beamer@sectionintoc {2}{Modelos lineales generalizados}{8}{0}{2}
+\beamer@subsectionintoc {2}{1}{Familia exponencial}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Modelos lineales generalizados}{16}{0}{2}
