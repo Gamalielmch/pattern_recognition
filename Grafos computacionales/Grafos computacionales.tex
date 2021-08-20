@@ -408,7 +408,7 @@ w_1 \\ w_2 \\ \vdots \\ w_n  \end{pmatrix}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Producto interno de dos vectores}
+\frametitle{Producto externo de vectores}
 \begin{itemize}
 \item El producto externo produce una matriz a la salida
 \item Supongamos $\boldsymbol{x}\in \mathbb{R}^{n}$ e $\boldsymbol{y} \in \mathbb{R}^{m}$
@@ -434,6 +434,97 @@ donde solo los términos con $i=k$ sobreviven
 \frac{\partial J}{\partial x_k}=\sum_j\frac{\partial J}{\partial z_{kj}}y_j \Rightarrow \nabla_{\boldsymbol{x}}J=\nabla_{\boldsymbol{z}} J \boldsymbol{y}
 \end{equation*}
 \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto externo de vectores}
+\begin{itemize}
+\item De forma equivalente para $\boldsymbol{y} $
+
+\begin{equation*}
+\frac{\partial J}{\partial y_k}=\sum_i\sum_j \frac{\partial J}{\partial z_{ij}}\frac{\partial z_{ij}}{\partial y_k}= \sum_i\sum_j \frac{\partial J}{\partial z_{ij}} \frac{\partial {(x_iy_j)}}{\partial y_k}
+\end{equation*}
+donde solo los términos con $j=k$ sobreviven 
+\begin{equation*}
+\frac{\partial J}{\partial y_k}=\sum_j\frac{\partial J}{\partial z_{kj}}x_i \Rightarrow \nabla_{\boldsymbol{y}}J=(\nabla_{\boldsymbol{z}} J)^T \boldsymbol{x}
+\end{equation*}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto externo de vectores}
+\includegraphics[scale=0.35]{im28}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto de matrices}
+\begin{itemize}
+\item Sean $\boldsymbol{X} \in \mathbb{R}^{r\times c}, \boldsymbol{Y} \in \mathbb{R}^{c\times d}, \boldsymbol{Z}=\boldsymbol{XY} \in \mathbb{R}^{r\times d}$
+
+\begin{equation*}
+\boldsymbol{Z}= \begin{bmatrix}
+z_{11} & z_{12} & \cdots & z_{1m}\\
+z_{21} & z_{22} & \cdots & z_{2m}\\
+\vdots & \vdots & \ddots & \vdots \\
+z_{n1} & z_{n2} & \cdots & z_{nm}
+\end{bmatrix} =\boldsymbol{XY}
+\end{equation*}
+\begin{equation*}
+ \begin{bmatrix}
+\boldsymbol{x}^{T}_{1,:}\boldsymbol{y}_{:,1} & \boldsymbol{x}^{T}_{1,:}\boldsymbol{y}_{:,2} & \cdots & \boldsymbol{x}^{T}_{1,:}\boldsymbol{y}_{:,m}\\
+\boldsymbol{x}^{T}_{2,:}\boldsymbol{y}_{:,1} & \boldsymbol{x}^{T}_{2,:}\boldsymbol{y}_{:,2} & \cdots & \boldsymbol{x}^{T}_{2,:}\boldsymbol{y}_{:,m}\\
+\vdots & \vdots & \ddots & \vdots \\
+\boldsymbol{x}^{T}_{n,:}\boldsymbol{y}_{:,1} & \boldsymbol{x}^{T}_{n,:}\boldsymbol{y}_{:,2} & \cdots & \boldsymbol{x}^{T}_{n,:}\boldsymbol{y}_{:,m}
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+z_{ij}=\boldsymbol{x}^{T}_{i,:}\boldsymbol{y}_{:,j}=\sum_{k=1}^{c}x_{ik}y_{kj}
+\end{equation*}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto de matrices}
+\begin{itemize}
+\item Siguiendo el principio de múltiples salidas (elementos de $\boldsymbol{Z}$)
+
+\begin{equation*}
+\frac{\partial J}{\partial x_{lm}}=\sum_{i=1}^{r}\sum_{j=1}^{d}\frac{\partial J}{\partial z_{ij}}\frac{\partial z_{ij}}{\partial x_{lm}}
+\end{equation*}
+donde solo los términos con $i=l$ y $k=m$ sobreviven
+\begin{equation*}
+\frac{\partial J}{\partial x_{lm}}=\sum_{j=1}^{d}\frac{\partial J}{\partial z_{lj}}y_{mj} \Rightarrow \nabla_{\boldsymbol{x}}J= \nabla_{\boldsymbol{Z}} J\boldsymbol{Y}^T
+\end{equation*}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto de matrices}
+\includegraphics[scale=0.35]{im29}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto matriz vector}
+\begin{itemize}
+\item Un caso particular del producto de matrices es el producto matriz vector
+
+\begin{equation*}
+ \boldsymbol{z}=\boldsymbol{X}\boldsymbol{y}
+\end{equation*}
+\item Simplemente tómese $\boldsymbol{Y}=\boldsymbol{y}$
+\item En ese caso, $\nabla_{\boldsymbol{Z}}J$ es un vector
+\begin{itemize}
+\item $\nabla_{\boldsymbol{y}}J=\boldsymbol{X}^T \nabla_{\boldsymbol{Z}}J $ es un vector
+\item $\nabla_{\boldsymbol{X}}J=\nabla_{\boldsymbol{Z}}J \boldsymbol{y}^T  $ es una matriz (producto externo)
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Producto de matrices}
+\includegraphics[scale=0.35]{im30} 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ThankYouFrame

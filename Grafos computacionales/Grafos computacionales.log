@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.5.3)  30 JUN 2021 15:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.5.3)  16 AUG 2021 20:22
 entering extended mode
 **"./Grafos computacionales.tex"
 (Grafos computacionales.tex
@@ -1361,6 +1361,39 @@ Overfull \hbox (8.70502pt too wide) detected at line 437
 
 ] [43
 
+]
+<im28.jpg, id=628, 433.62pt x 271.76532pt>
+File: im28.jpg Graphic file (type jpg)
+<use im28.jpg>
+Package pdftex.def Info: im28.jpg  used on input line 458.
+(pdftex.def)             Requested size: 151.76927pt x 95.11928pt.
+ [44
+
+ <./im28.jpg>] [45
+
+] [46
+
+]
+<im29.jpg, id=665, 433.62pt x 263.48438pt>
+File: im29.jpg Graphic file (type jpg)
+<use im29.jpg>
+Package pdftex.def Info: im29.jpg  used on input line 505.
+(pdftex.def)             Requested size: 151.76927pt x 92.2209pt.
+ [47
+
+ <./im29.jpg>] [48
+
+]
+<im30.jpg, id=690, 578.16pt x 351.3125pt>
+File: im30.jpg Graphic file (type jpg)
+<use im30.jpg>
+Package pdftex.def Info: im30.jpg  used on input line 528.
+(pdftex.def)             Requested size: 202.35902pt x 122.96121pt.
+ [49
+
+ <./im30.jpg>]
+[50
+
  <./UASLP_Logo.png>]
 \tf@nav=\write6
 \openout6 = `"Grafos computacionales.nav"'.
@@ -1377,11 +1410,11 @@ d.
 (rerunfilecheck)             Checksum: A3C89E071537A00D5648CECDAF15B29B;925.
  ) 
 Here is how much of TeX's memory you used:
- 21416 strings out of 479334
- 397646 string characters out of 2857085
- 684367 words of memory out of 3000000
- 38271 multiletter control sequences out of 15000+200000
- 482947 words of font info for 121 fonts, out of 3000000 for 9000
+ 21469 strings out of 479334
+ 398161 string characters out of 2857085
+ 684617 words of memory out of 3000000
+ 38309 multiletter control sequences out of 15000+200000
+ 484107 words of font info for 122 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  131i,30n,132p,448b,574s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/coyul/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <C
@@ -1406,9 +1439,9 @@ a/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/coyul/App
 Data/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/coyul
 /AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/co
 yul/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on "Grafos computacionales.pdf" (43 pages, 2796162 bytes).
+Output written on "Grafos computacionales.pdf" (50 pages, 2891291 bytes).
 PDF statistics:
- 720 PDF objects out of 1000 (max. 8388607)
- 93 named destinations out of 1000 (max. 500000)
- 256 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 810 PDF objects out of 1000 (max. 8388607)
+ 107 named destinations out of 1000 (max. 500000)
+ 271 words of extra memory for PDF output out of 10000 (max. 10000000)
 
