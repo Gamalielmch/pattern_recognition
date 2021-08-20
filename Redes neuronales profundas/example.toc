@@ -1,0 +1,5 @@
+\babel@toc {french}{}
+\beamer@sectionintoc {1}{Contenido}{2}{0}{1}
+\beamer@sectionintoc {2}{Estructura de redes profundas}{3}{0}{2}
+\beamer@sectionintoc {3}{Capas de combinación}{5}{0}{3}
+\beamer@subsectionintoc {3}{1}{Capa totalmente conectada}{5}{0}{3}
