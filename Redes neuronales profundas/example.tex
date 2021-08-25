@@ -99,12 +99,110 @@
 \end{equation*}
 \item Concepto se generaliza para procesar mini-lotes para matriz de diseño $\boldsymbol{X}$ con los datos en sus filas (y salidas en filas de $\boldsymbol{Y} $) 
 \begin{equation*}
-\boldsymbol{Y}= \begin{bmatrix} \boldsymbol{1} & \boldsymbol{X} \end{bmatrix} \boldsymbol{W}^T
+\boldsymbol{Y}= \begin{bmatrix} \textbf{1} & \boldsymbol{X} \end{bmatrix} \boldsymbol{W}^T
 \end{equation*}
 \end{itemize}
   
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Inicialización de pesos}
+\begin{itemize}
+ \item ¿Cómo inicializamos las matrices $\boldsymbol{W}$?
+ \begin{itemize}
+ \item No es simple  de responder
+ \end{itemize}
+ \item Dependerá de los tipos de capas de activación que usamos
+ \item Usualmente serán números aleatorios distribuidos de cierta forma 
+ \item El rango de valores utilizables es limitado
+ \item Si se eligen muy pequeños, el entrenamiento los aniquila ($\rightarrow 0$)
+ \item Si se eligen muy grandes, explotan (NaN)
+ \item Buena elección acelera convergencia 
+ \item Marcos de trabajo ofrecen alternativas "estándar", pero cada método tiene un uso particular  
+ \end{itemize}
+  
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+\begin{itemize}
+ \item Asumamo que 
+ \begin{itemize}
+ \item entrada  $\boldsymbol{x}$ tiene componentes i.i.d.  $x_i~\mathcal{N}(0\sigma_x)$
+ \item entrada  $\boldsymbol{W}$ tiene componentes i.i.d.  $w_{ij}~\mathcal{N}(0\sigma_w)$
+ \end{itemize}
+ \item Si $\boldsymbol{y}=\boldsymbol{W}\boldsymbol{x}$ ¿cómo se distribuyen los $y_i$?
+ \item Para responder esto necesitamos dos propiedades: 
+ \begin{equation*}
+  E\left[   \sum_i a_i    \right] =\sum_i E \left[  a_i \right] 
+ \end{equation*}
+  \begin{equation*}
+  E\left[   \prod a_i    \right] =\prod_i E \left[  a_i \right] 
+ \end{equation*}
+ siempre que $a_i$ sea independiente 
+ \item Se cumple que $y_i=\boldsymbol{w}_{i,:}^T\boldsymbol{x}= \sum_{k=1}^{n}w_{ik}x_k$
+ particular
+ \end{itemize}
+  
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+\begin{itemize}
+ \item Valor esperado para $y_i$ es entonces
+ \begin{equation*}
+ E\left[   y_i  \right]= E\left[   \sum_{k=1}^n w_{ik}x_k    \right]=\sum_{k=1}^n E\left[ w_{ik} x_k  \right] =\sum_{k=1}^n E\left[ w_{ik}\right] E\left[ x_k  \right]=0
+ \end{equation*}
+ es decir, el valor medio sigue siendo cero
+ \item la varianza de $y_i$ es (considerando que $E[y_i]=0$)
+  \begin{equation*}
+  \begin{split}
+  Var[y_i]& = E\left[  (y_i-E[y_i])^2   \right] = E [y_i^2]= E\left[ \left(  \sum_{k=1}^n w_{ik} x_k \right)^2  \right]\\
+  & = E\left[ \left(  \sum_{k=1}^n w_{ik} x_k \right) \left(  \sum_{k=1}^n w_{ik} x_k \right)  \right]=E\left[\sum_{k=1}^n \sum_{l=1}^n  w_{ik} x_k w_{il} x_l \right] 
+  \end{split}
+ \end{equation*}
+
+ \end{itemize}
+  
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+
+  \begin{equation*}
+  \begin{split}
+  & = E\left[ \left(  \sum_{k=1}^n w_{ik} x_k \right) \left(  \sum_{k=1}^n w_{ik} x_k \right)  \right]=E\left[\sum_{k=1}^n \sum_{l=1}^n  w_{ik} x_k w_{il} x_l \right]\\
+   &= \sum_{k=1}^n \sum_{l=1}^n E\left[w_{ik}  w_{il} x_k x_l \right] =\sum_{k=1}^n \sum_{l=1}^n E\left[w_{ik}w_{il} \right]E\left[  x_k x_l \right]
+  \end{split}
+ \end{equation*}
+donde $x_k$ y $x_l$ son i.i.d solo si $k\neq l$, y lo mismo para $w_{ik}$ y $w_{il}$
+\begin{itemize}
+\item Esto quiere decir que si $k\neq l$ entonces $E[w_{ik}w_{il} ]=0$ y $E[x_k x_l ]=0$ 
+\begin{equation*}
+  \begin{split}
+Var[y_i] & = \sum_{k=1}^n \sum_{l=1}^n E\left[w_{ik}w_{il} \right]E\left[  x_k x_l \right]=\sum_{k=1}^n E\left[w_{k}^2\right] E\left[  x_k^2\right]\\
+& = \sum_{k=1}^n \alpha^2_w \alpha^2_x=n \alpha^2_w \alpha^2_x
+\end{split}
+\end{equation*}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+\begin{itemize}
+\item Si la entrada tiene $\alpha_x=1$, entonces $Var[y_i]=n\sigma^2_w$
+\item Si pegáramos varias capas, la varianza ¡crece con n!
+\item luego de varias capas, esos números alcanzarían NaN
+\item Si queremos que $Var[y_i]=1$ entonces tenemos que elegir $\sigma_w=1/\sqrt{n}$
+\item El análisis anterior solo considera la capa conectada  aislada
+\item Falta considerar la capa de activación 
+\item Salida de esa capa debería tener varianza unitaria (entrada a siguiente capa)
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 \end{document}
 
