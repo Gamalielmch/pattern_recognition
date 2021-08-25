@@ -101,6 +101,7 @@
 \begin{equation*}
 \boldsymbol{Y}= \begin{bmatrix} \textbf{1} & \boldsymbol{X} \end{bmatrix} \boldsymbol{W}^T
 \end{equation*}
+\item Generalmente utilizadas con datos de información distribuida en todas las componentes (salida múltiples de sensores) 
 \end{itemize}
   
 \end{frame}
@@ -108,6 +109,7 @@
 \begin{frame}
   \frametitle{Inicialización de pesos}
 \begin{itemize}
+<<<<<<< HEAD
  \item ¿Cómo inicializamos las matrices $\boldsymbol{W}$?
  \begin{itemize}
  \item No es simple  de responder
@@ -120,12 +122,26 @@
  \item Buena elección acelera convergencia 
  \item Marcos de trabajo ofrecen alternativas "estándar", pero cada método tiene un uso particular  
  \end{itemize}
+=======
+\item ¿Cómo inicializamos las matrices de pesos $\boldsymbol{W}$?
+
+\item Dependerá de los tipos de capas de activación que usemos
+\item Usualmente serán números aleatorios distribuidos de cierta forma.
+\item El rango de valores utilizables es limitado
+\item Si se eligen muy pequeños, entrenamiento los aniquila ($\rightarrow 0$)
+\item Si se eligen muy grandes, explotan (NaN)
+\item Buena elección acelera convergencia
+\item Mala elección frena convergencia 
+\item Marcos de trabajo ofrecen alternativas "estándar", pero cada método tiene un uso particular    
+\end{itemize}
+>>>>>>> 8d8dd1bffc7bc179ef89183b5d1e2e376e754ebe
   
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{Inicialización en capa totalmente conectada}
 \begin{itemize}
+<<<<<<< HEAD
  \item Asumamo que 
  \begin{itemize}
  \item entrada  $\boldsymbol{x}$ tiene componentes i.i.d.  $x_i~\mathcal{N}(0\sigma_x)$
@@ -145,10 +161,30 @@
  \end{itemize}
   
 \end{frame}
+=======
+\item Asumamos que 
+\begin{itemize}
+\item entrada $\boldsymbol{x}$ tiene componentes i.i.d. $x_i \sim \mathbf{N}(0,\alpha_x)$
+\item pesos $\boldsymbol{W}$ tiene componentes i.i.d. $w_ij \sim \mathbf{N}(0,\alpha_w)$
+\end{itemize}
+\item Si $\boldsymbol{y}=\boldsymbol{W}\boldsymbol{x} $ ¿cómo se distribuyen los $y_i$?
+\item Para responder esto necesitamos dos propiedades: 
+\begin{equation*}
+E\left[ \sum_{i} a_{i}  \right] =\sum_i E \left[ a_{i}  \right]
+\end{equation*}
+\begin{equation*}
+E\left[ \prod_{i} a_{i}  \right] =\prod_i E \left[ a_{i}  \right]
+\end{equation*} siempre que $a_i$ sean independientes entre sí 
+\item Se cumple que $y_i=\boldsymbol{w}_{i,:}^T\boldsymbol{x}=\sum_{k=1}^{n} w_{ik}x_k$
+\end{itemize}
+\end{frame}
+
+>>>>>>> 8d8dd1bffc7bc179ef89183b5d1e2e376e754ebe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{Inicialización en capa totalmente conectada}
 \begin{itemize}
+<<<<<<< HEAD
  \item Valor esperado para $y_i$ es entonces
  \begin{equation*}
  E\left[   y_i  \right]= E\left[   \sum_{k=1}^n w_{ik}x_k    \right]=\sum_{k=1}^n E\left[ w_{ik} x_k  \right] =\sum_{k=1}^n E\left[ w_{ik}\right] E\left[ x_k  \right]=0
@@ -184,11 +220,30 @@ Var[y_i] & = \sum_{k=1}^n \sum_{l=1}^n E\left[w_{ik}w_{il} \right]E\left[  x_k x
 & = \sum_{k=1}^n \alpha^2_w \alpha^2_x=n \alpha^2_w \alpha^2_x
 \end{split}
 \end{equation*}
+=======
+\item El valor esperado para $y_i$ es entonces 
+\begin{equation*}
+E\left[ y_{i}  \right] =E\left[ \sum_{k=1}^{n}{ w_{ik}x_{k} } \right]= \sum_{k=1}^{n}{ E\left[w_{ik}x_{k} \right]}=\sum_{k=1}^{n}{ E\left[w_{ik}\right]  E\left[x_{k} \right]}=0
+\end{equation*}
+es decir, el valor medio sigue siendo cero. 
+
+
+\item La varianza de $y_i$ es (considerando que $E\left[ y_{i}  \right] =0$) 
+
+\begin{equation*}
+\begin{split}
+Var\left[ y_{i} \right] & = E \left[ (y_{i}- E\left[ y_{i})^2 \right] )  \right]=E\left[ y_{i})^2\right]=E \left[ \left( \sum_{k=1}^{n}{ w_{ik}x_{k} }\right)^2   \right] \\
+&=  E \left[ \left( \sum_{k=1}^{n}{ w_{ik}x_{k} }\right) \left( \sum_{l=1}^{n}{ w_{il}x_{l} }\right) \right]=   \sum_{k=1}^{n}\sum_{l=1}^{n} E \left[{ w_{ik}x_{k} } \right]  E \left[w_{il}x_{l}  \right]
+\end{split}
+\end{equation*}
+
+>>>>>>> 8d8dd1bffc7bc179ef89183b5d1e2e376e754ebe
 \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{Inicialización en capa totalmente conectada}
+<<<<<<< HEAD
 \begin{itemize}
 \item Si la entrada tiene $\alpha_x=1$, entonces $Var[y_i]=n\sigma^2_w$
 \item Si pegáramos varias capas, la varianza ¡crece con n!
@@ -203,7 +258,59 @@ Var[y_i] & = \sum_{k=1}^n \sum_{l=1}^n E\left[w_{ik}w_{il} \right]E\left[  x_k x
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+=======
 
+
+\begin{equation*}
+\begin{split}
+&=  E \left[ \left( \sum_{k=1}^{n}{ w_{ik}x_{k} }\right) \left( \sum_{l=1}^{n}{ w_{il}x_{l} }\right) \right]=   \sum_{k=1}^{n}\sum_{l=1}^{n} E \left[{ w_{ik}x_{k} } \right]  E \left[w_{il}x_{l}  \right]\\
+&=  \sum_{k=1}^{n}\sum_{l=1}^{n}E \left[w_{ik}w_{il}x_{k}x_{l}\right]=\sum_{k=1}^{n}\sum_{l=1}^{n} E \left[w_{ik}w_{il}\right]E \left[x_{k}x_{l}\right]
+\end{split}
+\end{equation*}
+donde $x_k$ y $x_l$ son i.i.d. solo si $k\neq l$, y lo mismo para $w_{ik}$ y $w_{il}$ 
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>>>>>>> 8d8dd1bffc7bc179ef89183b5d1e2e376e754ebe
+
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+
+\begin{itemize}
+\item Esto quiere decir que si $k\neq l$ entonces $E \left[w_{ik}w_{il}\right]=0 $ y $E \left[x_{k}x_{l}\right]=0$
+\begin{equation*}
+Var\left[ y_{i} \right] = \sum_{k=1}^{n}\sum_{l=1}^{n} E \left[w_{ik}w_{il}\right]E \left[x_{k}x_{l}\right]= \sum_{k=1}^{n}E \left[w_{ik}^2\right]E \left[x_{ik}^2\right]= \sum_{k=1}^{n}\sigma_{w}^2 \sigma_{x}^2
+\end{equation*}¨
+\begin{equation*}
+ \sum_{k=1}^{n}\sigma_{w}^2 \sigma_{x}^2= n\sigma_{w}^2 \sigma_{x}^2
+\end{equation*}
+\item si la entrada tiene $\sigma_x=1$, entonces $Var[y_i]=n\sigma_{w}^2$
+\item Si pegáramos varias capas, la varianza !crece con! (números posibles van a crecer)
+\item Luego de varias capas, esos números alcanzarían NaN
+\item Si queremos que $Var[y_i]=1$ entonces tenemos que elegir $\sigma_w=1/\sqrt{n}$ 
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Inicialización en capa totalmente conectada}
+
+\begin{itemize}
+
+\item El análisis anterior solo considera la capa conectada aislada 
+\item Falta considerar la capa de activación
+\item Salida de esa capa debería tener varianza unitaria (entrada a siguiente capa)
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \centering \LARGE
+  \emph{Capas convolucionales}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
 

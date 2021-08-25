@@ -31,8 +31,20 @@
 \headcommand {\beamer@framepages {10}{10}}
 \headcommand {\slideentry {3}{1}{7}{11/11}{Capa totalmente conectada}{0}}
 \headcommand {\beamer@framepages {11}{11}}
+<<<<<<< HEAD
 \headcommand {\beamer@partpages {1}{11}}
 \headcommand {\beamer@subsectionpages {5}{11}}
 \headcommand {\beamer@sectionpages {5}{11}}
 \headcommand {\beamer@documentpages {11}}
 \headcommand {\gdef \inserttotalframenumber {11}}
+=======
+\headcommand {\slideentry {3}{1}{8}{12/12}{Capa totalmente conectada}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {3}{1}{9}{13/13}{Capa totalmente conectada}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\beamer@partpages {1}{13}}
+\headcommand {\beamer@subsectionpages {5}{13}}
+\headcommand {\beamer@sectionpages {5}{13}}
+\headcommand {\beamer@documentpages {13}}
+\headcommand {\gdef \inserttotalframenumber {13}}
+>>>>>>> 8d8dd1bffc7bc179ef89183b5d1e2e376e754ebe
