@@ -1,6 +1,0 @@
-\beamer@sectionintoc {1}{Grafos computacionales}{3}{0}{1}
-\beamer@sectionintoc {2}{Caso escalar}{5}{0}{2}
-\beamer@subsectionintoc {2}{1}{Propagación hacia adelante}{5}{0}{2}
-\beamer@subsectionintoc {2}{2}{Propagación hacia atras}{7}{0}{2}
-\beamer@subsectionintoc {2}{3}{Operación de un nodo}{16}{0}{2}
-\beamer@sectionintoc {3}{Caso vectorial}{24}{0}{3}

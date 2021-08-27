@@ -1,8 +1,0 @@
-\babel@toc {english}{}
-\beamer@sectionintoc {1}{Introducción}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Contextualización}{4}{0}{1}
-\beamer@subsectionintoc {1}{2}{Inspiración biológica}{6}{0}{1}
-\beamer@subsectionintoc {1}{3}{Nuerona Artificial}{8}{0}{1}
-\beamer@sectionintoc {2}{Red Neuronal Artificial}{13}{0}{2}
-\beamer@subsectionintoc {2}{1}{Hipótesis}{14}{0}{2}
-\beamer@subsectionintoc {2}{2}{Capas}{15}{0}{2}

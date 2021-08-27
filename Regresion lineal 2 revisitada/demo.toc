@@ -1,3 +1,0 @@
-\beamer@sectionintoc {1}{Regresi\IeC {\'o}n lineal}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Interpretaci\IeC {\'o}n probabil\IeC {\'\i }stica}{4}{0}{1}
-\beamer@sectionintoc {2}{Conclusion}{21}{0}{2}
