@@ -37,7 +37,7 @@ plot3(x_vergi(:,1),x_vergi(:,2),x_vergi(:,3),'ob')
 
 %%%%%%%%%%%%%%%%%%%%%%%% GDA
 X_mu=[];
-for i=1:nc
+for i=1:nc-1
 phi(i)=length(find(y==i-1))/m;
 mu(i,:)=sum(x(y==i-1,:))/length(find(y==i-1));
 X_mu=[X_mu; x(y==i-1,:)-mu(i,:)];
@@ -49,6 +49,9 @@ X1=[x1(:),y1(:)];
 z1=mvnpdf(X1,mu_1,sigma);
 contour(x1,y1,reshape(z1,100,100),8)
 hold on
+z2=mvnpdf(X1,mu_0,sigma);
+contour(x1,y1,reshape(z2,100,100),8)
+
 z2=mvnpdf(X1,mu_0,sigma);
 contour(x1,y1,reshape(z2,100,100),8)
 
